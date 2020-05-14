@@ -8,8 +8,8 @@
 [image4]: ./report_images_output/4-canny_edges.jpg "Canny Edges"
 [image5]: ./report_images_output/5-roi.jpg "Region of Interest"
 [image6]: ./report_images_output/6-h_lines.jpg "h_lines"
-[image7]: ./report_images_output/6-h_lines.jpg "h_lines"
-[image8]: ./report_images_output/7-final_img.jpg "Final Output"
+[image7]: ./report_images_output/7-h_lane.jpg "h_lines"
+[image8]: ./report_images_output/8-final_img.jpg "Final Output"
 
 
 ---
@@ -41,14 +41,17 @@ In order to find the correct x values for each point, a function `f(y) = x` is n
 
 ### 2. Identify potential shortcomings with your current pipeline
 
+#### Line Segment Orientation
 
-One potential shortcoming would be what would happen when ... 
-
-Another shortcoming could be ...
+The  algorithm assumes lane lines to be fairly consistent in terms of orientation, the line extrapolation operation makes a broad assumption that lane lines have extreme slopes. This works only when processing images of a car traveling parallel to a mostly straight road. In the case of a curved road the slopes of each detected line may be dampened as a part of the curve. also when a car is not traveling parallel to the lane (entering a road, or changing lanes) the orientation/slope of the lines might not be extreme enough to be detected.
 
 
 ### 3. Suggest possible improvements to your pipeline
 
-A possible improvement would be to ...
+#### Line Detection
 
-Another potential improvement could be to ...
+it might be posible to improve the line detection by running parallel pipelines to gain the benefits of different options. Each approach could use different color spaces, or different parameters for each step of the pipeline.
+
+#### (Video-Only) Detected Line prediction
+
+There are many frames of a given video where the tuned parameters detect lines with suden changes on its parameters. since the images processed come from a video, can be fairly asumed that the line detected should have similar paramters (slope, starting point) than the previously detected lines. perhaps a EKF could be applied to track the state change of the line and decay the suden changes of the detected lines.
